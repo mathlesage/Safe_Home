@@ -24,6 +24,7 @@ def get_csv_from_github():
         return pd.DataFrame(), None
     else:
         st.error("Erreur lors de l'accès au fichier CSV sur GitHub.")
+        st.write(response.status_code)
         st.stop()
 
 
