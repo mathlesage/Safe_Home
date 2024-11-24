@@ -3,6 +3,9 @@ import pandas as pd
 import requests
 import base64
 import io
+from geopy.geocoders import Nominatim
+geolocator = Nominatim(user_agent="geoapi")
+
 # Informations de GitHub
 output_str = "g*i*t*h*u*b*_*p*a*t*_*1*1*B*A*B*T*T*G*Y*0*p*k*l*Q*B*I*P*5*b*a*z*I*_*D*n*I*I*w*L*k*W*Y*D*o*m*Q*F*q*w*g*f*8*n*g*W*r*p*H*O*v*j*C*v*o*a*J*h*b*2*i*V*K*F*Y*V*B*B*C*3*Q*Z*Y*Q*4*H*1*D*Z*H*Y*G*3"
 print(output_str)
@@ -71,30 +74,37 @@ choix_fous = st.checkbox("m'en fous tant que je rentre")
 
 # Bouton pour sauvegarder les informations
 if st.button("Enregistrer mes informations"):
+    location = geolocator.geocode(addresse)
+
     # Vérification que tous les champs obligatoires sont remplis
-    if nom and prenom and addresse:
-        # Récupération du fichier CSV existant depuis GitHub
-        df, sha = get_csv_from_github()
+    if location:
+        if nom and prenom and addresse:
+            # Récupération du fichier CSV existant depuis GitHub
+            df, sha = get_csv_from_github()
 
-        # Création d'un dictionnaire avec les informations
-        new_data = {
-            "Nom": nom,
-            "Prénom": prenom,
-            "Adresse": addresse,
-            "Heure de rentrée": str(heure),
-            "Rentre en voiture": rentre_en_voiture,
-            "Nombre de places": nombre_de_place,
-            "Avec ma voiture": choix_ma_voiture,
-            "Avec un métro": choix_metro,
-            "À pied": choix_a_pied,
-            "À vélo": choix_velo,
-            "Peu importe": choix_fous,
-        }
+            # Création d'un dictionnaire avec les informations
+            new_data = {
+                "Nom": nom,
+                "Prénom": prenom,
+                "Adresse": addresse,
+                "Heure de rentrée": str(heure),
+                "Rentre en voiture": rentre_en_voiture,
+                "Nombre de places": nombre_de_place,
+                "Avec ma voiture": choix_ma_voiture,
+                "Avec un métro": choix_metro,
+                "À pied": choix_a_pied,
+                "À vélo": choix_velo,
+                "Peu importe": choix_fous,
+                "Longitude": location.longitude,
+                "Latitude": location.latitude
+            }
 
-        # Ajout de la nouvelle ligne
-        df = pd.concat([df, pd.DataFrame([new_data])], ignore_index=True)
+            # Ajout de la nouvelle ligne
+            df = pd.concat([df, pd.DataFrame([new_data])], ignore_index=True)
 
-        # Mise à jour du fichier CSV sur GitHub
-        update_csv_on_github(df, sha)
+            # Mise à jour du fichier CSV sur GitHub
+            update_csv_on_github(df, sha)
+        else:
+            st.error("Veuillez remplir tous les champs obligatoires (Nom, Prénom, et Adresse).")
     else:
-        st.error("Veuillez remplir tous les champs obligatoires (Nom, Prénom, et Adresse).")
+        st.error("Addresse introuvable")
