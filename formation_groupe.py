@@ -67,7 +67,7 @@ for time, groups in grouped_people.items():
     st.subheader(f"🕒 Heure de rentrée : {time}")
     
     for i, group in enumerate(groups, 1):
-        st.markdown(f"### 🚗 Groupe {i}")
+        st.markdown(f"### Groupe {i}")
         for person in group:
             st.markdown(
                 f"""
