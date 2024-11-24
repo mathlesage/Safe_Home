@@ -27,6 +27,7 @@ def get_csv_from_github():
     else:
         st.error("Erreur lors de l'accès au fichier CSV sur GitHub.")
         st.write(response.status_code)
+        st.write(GITHUB_TOKEN)
         st.stop()
 
 
