@@ -13,7 +13,7 @@ def haversine(lat1, lon1, lat2, lon2):
     return R * c
 
 # Lecture du fichier CSV et regroupement par heure de rentrée
-def group_people_by_time_and_proximity(file_path, max_distance_km=10.0):
+def group_people_by_time_and_proximity(file_path, max_distance_km=2.0):
     groups = defaultdict(list)
 
     # Lecture des données du fichier CSV
@@ -61,11 +61,18 @@ def group_people_by_time_and_proximity(file_path, max_distance_km=10.0):
 file_path = "inscriptions.csv"
 grouped_people = group_people_by_time_and_proximity(file_path)
 
-# Affichage des résultats
+st.title("Groupes de personnes par heure de rentrée")
+
 for time, groups in grouped_people.items():
+    st.subheader(f"🕒 Heure de rentrée : {time}")
     
-    st.write(f"\nHeure de rentrée : {time}")
     for i, group in enumerate(groups, 1):
-        st.write(f"  Groupe {i}:")
+        st.markdown(f"### 🚗 Groupe {i}")
         for person in group:
-            st.write(f"    {person['Nom']} {person['Prénom']}")
+            st.markdown(
+                f"""
+                - **Nom :** {person['Nom']}
+                - **Prénom :** {person['Prénom']}
+                - **Adresse :** {person['Adresse']}
+                """
+            )
