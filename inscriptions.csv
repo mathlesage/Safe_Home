@@ -1,3 +1,4 @@
-Nom;Prénom;Adresse;Heure de rentrée;Rentre en voiture;Nombre de places;Avec ma voiture;Avec un métro;À pied;À vélo;Peu importe; Longitude; Latitude
-Quatreboeufs;Mathéo;39 rue des galardières;22:49:00;Non;0;False;True;False;False;False
-Quatreboeufs;Mathéo;39 rue des galardières;23:12:00;Non;0;True;False;False;False;False
+Nom;Prénom;Adresse;Heure de rentrée;Rentre en voiture;Nombre de places;Avec ma voiture;Avec un métro;À pied;À vélo;Peu importe; Longitude; Latitude;Longitude;Latitude
+Quatreboeufs;Mathéo;39 rue des galardières;22:49:00;Non;0;False;True;False;False;False;;;;
+Quatreboeufs;Mathéo;39 rue des galardières;23:12:00;Non;0;True;False;False;False;False;;;;
+Quatreboeufs ;Maxime ;35 rue des galardieres ;22:45:00;Non;0;False;False;True;False;True;;;-1.6133371;48.1065727
