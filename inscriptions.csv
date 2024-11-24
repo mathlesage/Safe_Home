@@ -1,12 +1,10 @@
 Nom;Prénom;Adresse;Heure de rentrée;Rentre en voiture;Nombre de places;Avec ma voiture;Avec un métro;À pied;À vélo;Peu importe; Longitude;Latitude;Longitude
 Quatreboeufs ;Maxime ;35 rue des galardieres ;22:45:00;Non;0;False;False;True;False;True;-1.6133371;48.1065727;
-Quatreboeufs ;Maxime ;35 rue des gal;22:45:00;Non;0;False;False;True;False;True;0.3800232121009573;49.75711286318637;
-Quatreboeufs ;Maxime ;35 rue des;22:45:00;Non;0;False;False;True;False;True;6.1396294;46.1906763;
 Quatreboeufs;Mathéo;39 rue des galardières;22:49:00;Non;0;False;True;False;False;False;;48.1063193;-1.6137182
 Quatreboeufs ;Maxime ;35 rue des;22:45:00;Non;0;False;False;True;False;True;;46.1906763;6.1396294
+Martine ;Lagrande;Rue coutanceau ;23:15:00;Non;0;False;False;True;False;True;;48.09638757110322;-1.664901835362769
 Martin ;Lemar;Rue coutanceau ;23:15:00;Non;0;False;False;True;False;True;;48.09638757110322;-1.664901835362769
-Martin ;Lemar;Rue coutanceau ;23:15:00;Non;0;False;False;True;False;True;;48.09638757110322;-1.664901835362769
-Martin ;Lemar;Rue coutanceau Rennes ;23:15:00;Non;0;False;False;True;False;True;;48.09638757110322;-1.664901835362769
+Léon ; Shark;Rue coutanceau Rennes ;23:15:00;Non;0;False;False;True;False;True;;48.09638757110322;-1.664901835362769
 ROBERT ;Lucas ;7 rue de châtillon, Rennes ;22:54:00;Non;0;False;True;False;True;False;;48.0188425;-1.7546461
 lemarchand;antoine ;7 Quineleu, Rennes ;23:00:00;Non;0;False;False;False;False;True;;48.09771255;-1.6680755386802577
 Griezman;antoine ;9 rue d'antrain, Rennes ;22:45:00;Non;0;False;False;True;False;False;;48.1151639;-1.6792094
