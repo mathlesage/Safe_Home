@@ -1,5 +1,50 @@
 import streamlit as st
 import pandas as pd
+import requests
+import base64
+import io
+# Informations de GitHub
+GITHUB_TOKEN = "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"  # Remplacez par votre token GitHub
+GITHUB_REPO = "mathlesage/Safe_Home"  # Remplacez par le chemin de votre dépôt
+CSV_PATH = "inscriptions.csv"  # Chemin vers le fichier CSV dans le dépôt
+
+
+def get_csv_from_github():
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{CSV_PATH}"
+    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        content = response.json()
+        csv_content = base64.b64decode(content["content"]).decode("utf-8")
+        sha = content["sha"]
+        # Correction ici avec io.StringIO
+        return pd.read_csv(io.StringIO(csv_content), sep=";"), sha
+    elif response.status_code == 404:
+        # Si le fichier n'existe pas encore
+        return pd.DataFrame(), None
+    else:
+        st.error("Erreur lors de l'accès au fichier CSV sur GitHub.")
+        st.stop()
+
+
+# Fonction pour mettre à jour le fichier CSV sur GitHub
+def update_csv_on_github(df, sha=None):
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{CSV_PATH}"
+    headers = {"Authorization": f"token {GITHUB_TOKEN}"}
+    csv_content = df.to_csv(sep=";", index=False, encoding="utf-8")
+    data = {
+        "message": "Mise à jour du fichier inscriptions.csv",
+        "content": base64.b64encode(csv_content.encode("utf-8")).decode("utf-8"),
+        "branch": "main",  # Remplacez par la branche de votre dépôt
+    }
+    if sha:
+        data["sha"] = sha  # Ajoute le SHA du fichier existant pour le mettre à jour
+    response = requests.put(url, headers=headers, json=data)
+    if response.status_code == 200 or response.status_code == 201:
+        st.success("Informations enregistrées avec succès sur GitHub !")
+    else:
+        st.error("Erreur lors de la mise à jour du fichier CSV sur GitHub.")
+        st.stop()
 
 # Titre de l'application
 st.title("Inscription à Safe_Home")
@@ -24,8 +69,11 @@ choix_fous = st.checkbox("m'en fous tant que je rentre")
 if st.button("Enregistrer mes informations"):
     # Vérification que tous les champs obligatoires sont remplis
     if nom and prenom and addresse:
+        # Récupération du fichier CSV existant depuis GitHub
+        df, sha = get_csv_from_github()
+
         # Création d'un dictionnaire avec les informations
-        data = {
+        new_data = {
             "Nom": nom,
             "Prénom": prenom,
             "Adresse": addresse,
@@ -38,19 +86,11 @@ if st.button("Enregistrer mes informations"):
             "À vélo": choix_velo,
             "Peu importe": choix_fous,
         }
-        
-        # Chargement ou création du fichier CSV avec sep=";"
-        try:
-            df = pd.read_csv("inscriptions.csv", sep=";", encoding="utf-8")
-        except FileNotFoundError:
-            df = pd.DataFrame(columns=data.keys())
-        
+
         # Ajout de la nouvelle ligne
-        df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
-        
-        # Sauvegarde des données dans le fichier CSV
-        df.to_csv("inscriptions.csv", sep=";", index=False, encoding="utf-8")
-        
-        st.success("Informations enregistrées avec succès !")
+        df = pd.concat([df, pd.DataFrame([new_data])], ignore_index=True)
+
+        # Mise à jour du fichier CSV sur GitHub
+        update_csv_on_github(df, sha)
     else:
         st.error("Veuillez remplir tous les champs obligatoires (Nom, Prénom, et Adresse).")
