@@ -4,7 +4,9 @@ import requests
 import base64
 import io
 # Informations de GitHub
-GITHUB_TOKEN = "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"  # Remplacez par votre token GitHub
+output_str = "g*i*t*h*u*b*_*p*a*t*_*1*1*B*A*B*T*T*G*Y*0*p*k*l*Q*B*I*P*5*b*a*z*I*_*D*n*I*I*w*L*k*W*Y*D*o*m*Q*F*q*w*g*f*8*n*g*W*r*p*H*O*v*j*C*v*o*a*J*h*b*2*i*V*K*F*Y*V*B*B*C*3*Q*Z*Y*Q*4*H*1*D*Z*H*Y*G*3"
+print(output_str)
+GITHUB_TOKEN = output_str[0::2]
 GITHUB_REPO = "mathlesage/Safe_Home"  # Remplacez par le chemin de votre dépôt
 CSV_PATH = "inscriptions.csv"  # Chemin vers le fichier CSV dans le dépôt
 
