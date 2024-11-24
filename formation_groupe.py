@@ -1,7 +1,7 @@
 import csv
 from collections import defaultdict
 from math import radians, cos, sin, sqrt, atan2
-
+import streamlit as st
 # Calcul de la distance entre deux coordonnées géographiques (Haversine formula)
 def haversine(lat1, lon1, lat2, lon2):
     R = 6371  # Rayon de la Terre en kilomètres
@@ -13,7 +13,7 @@ def haversine(lat1, lon1, lat2, lon2):
     return R * c
 
 # Lecture du fichier CSV et regroupement par heure de rentrée
-def group_people_by_time_and_proximity(file_path, max_distance_km=1.0):
+def group_people_by_time_and_proximity(file_path, max_distance_km=10.0):
     groups = defaultdict(list)
 
     # Lecture des données du fichier CSV
@@ -48,6 +48,7 @@ def group_people_by_time_and_proximity(file_path, max_distance_km=1.0):
                             person["Latitude"], person["Longitude"],
                             other["Latitude"], other["Longitude"]
                         )
+                        print(distance)
                         if distance <= max_distance_km:
                             group.append(other)
                             people_at_time.remove(other)
@@ -57,13 +58,14 @@ def group_people_by_time_and_proximity(file_path, max_distance_km=1.0):
     return final_groups
 
 # Exemple d'utilisation
-file_path = "chemin_vers_votre_fichier.csv"
+file_path = "inscriptions.csv"
 grouped_people = group_people_by_time_and_proximity(file_path)
 
 # Affichage des résultats
 for time, groups in grouped_people.items():
-    print(f"\nHeure de rentrée : {time}")
+    
+    st.write(f"\nHeure de rentrée : {time}")
     for i, group in enumerate(groups, 1):
-        print(f"  Groupe {i}:")
+        st.write(f"  Groupe {i}:")
         for person in group:
-            print(f"    {person['Nom']} {person['Prénom']} - {person['Adresse']}")
+            st.write(f"    {person['Nom']} {person['Prénom']}")
