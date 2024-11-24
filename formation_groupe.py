@@ -73,6 +73,5 @@ for time, groups in grouped_people.items():
                 f"""
                 - **Nom :** {person['Nom']}
                 - **Prénom :** {person['Prénom']}
-                - **Adresse :** {person['Adresse']}
                 """
             )
