@@ -47,7 +47,9 @@ def update_csv_on_github(df, sha=None):
     if response.status_code == 200 or response.status_code == 201:
         st.success("Informations enregistrées avec succès sur GitHub !")
     else:
+        
         st.error("Erreur lors de la mise à jour du fichier CSV sur GitHub.")
+        st.write(response.status_code)
         st.stop()
 
 # Titre de l'application
