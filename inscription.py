@@ -6,10 +6,8 @@ import io
 from geopy.geocoders import Nominatim
 geolocator = Nominatim(user_agent="geoapi")
 
-# Informations de GitHub
-output_str = "g*i*t*h*u*b*_*p*a*t*_*1*1*B*A*B*T*T*G*Y*0*p*k*l*Q*B*I*P*5*b*a*z*I*_*D*n*I*I*w*L*k*W*Y*D*o*m*Q*F*q*w*g*f*8*n*g*W*r*p*H*O*v*j*C*v*o*a*J*h*b*2*i*V*K*F*Y*V*B*B*C*3*Q*Z*Y*Q*4*H*1*D*Z*H*Y*G*3"
-print(output_str)
-GITHUB_TOKEN = output_str[0::2]
+
+GITHUB_TOKEN = st.secrets["CSV_KEY"]
 GITHUB_REPO = "mathlesage/Safe_Home"  # Remplacez par le chemin de votre dépôt
 CSV_PATH = "inscriptions.csv"  # Chemin vers le fichier CSV dans le dépôt
 
@@ -30,7 +28,6 @@ def get_csv_from_github():
     else:
         st.error("Erreur lors de l'accès au fichier CSV sur GitHub.")
         st.write(response.status_code)
-        st.write(GITHUB_TOKEN)
         st.stop()
 
 
